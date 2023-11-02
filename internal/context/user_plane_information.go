@@ -45,6 +45,12 @@ type UPNode struct {
 	UPF    *UPF
 }
 
+func (u *UPNode) ToString() string {
+	var result string 
+	result = result + u.Name + "\n" +  string(u.Type) + "\n" + u.ANIP.String() + "\n" + u.UPF.Addr + "\n" 
+	return result  
+}
+
 func (u *UPNode) MatchedSelection(selection *UPFSelectionParams) bool {
 	for _, snssaiInfo := range u.UPF.SNssaiInfos {
 		currentSnssai := snssaiInfo.SNssai

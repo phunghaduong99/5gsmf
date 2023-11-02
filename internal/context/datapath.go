@@ -96,6 +96,13 @@ func NewDataPath() *DataPath {
 	return dataPath
 }
 
+func (d *DataPathPool) Print() string {
+	var result string = ""
+	for key, e := range *d {
+		result = result + " " + strconv.Itoa(int(key)) + ":" + "ID:" + e.String() + "\n"
+	}
+	return result
+}
 func NewDataPathPool() DataPathPool {
 	pool := make(map[int64]*DataPath)
 	return pool
@@ -323,6 +330,7 @@ func (dataPath *DataPath) String() string {
 	for curDPNode := firstDPNode; curDPNode != nil; curDPNode = curDPNode.Next() {
 		str += strconv.Itoa(index) + "th Node in the Path\n"
 		str += "Current UPF IP: " + curDPNode.GetNodeIP() + "\n"
+		str += "Current TEID: " + strconv.Itoa(int(curDPNode.UpLinkTunnel.TEID)) + "\n"
 		if curDPNode.Prev() != nil {
 			str += "Previous UPF IP: " + curDPNode.Prev().GetNodeIP() + "\n"
 		} else {
