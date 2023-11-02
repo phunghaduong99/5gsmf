@@ -20,6 +20,7 @@ type PDUSessionInfo struct {
 	SessionRule  models.SessionRule
 	UpCnxState   models.UpCnxState
 	Tunnel       context.UPTunnel
+	UPNode		string
 }
 
 func HandleOAMGetUEPDUSessionInfo(smContextRef string) *httpwrapper.Response {
@@ -46,11 +47,19 @@ func HandleOAMGetUEPDUSessionInfo(smContextRef string) *httpwrapper.Response {
 			AnType:       smContext.AnType,
 			PDUAddress:   smContext.PDUAddress.String(),
 			UpCnxState:   smContext.UpCnxState,
-			// Tunnel: context.UPTunnel{
+			Tunnel: context.UPTunnel{
 			// 	//UpfRoot:  smContext.Tunnel.UpfRoot,
-			// 	ULCLRoot: smContext.Tunnel.UpfRoot,
-			// },
+				// ULCLRoot: smContext.Tunnel.UpfRoot,
+				// DataPathPool:  smContext.Tunnel.DataPathPool.,
+				PathIDGenerator: smContext.Tunnel.PathIDGenerator,
+
+				ANInformation: smContext.Tunnel.ANInformation,
+			},
+			UPNode: smContext.Tunnel.DataPathPool.Print(),
+			
 		},
 	}
+
+	
 	return httpResponse
 }
